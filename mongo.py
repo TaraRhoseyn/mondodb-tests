@@ -21,10 +21,9 @@ conn = mongo_connect(MONGO_URI)
 
 coll = conn[DATABASE][COLLECTION]
 
-coll.find({"first": "douglas"})
-# MongoDB object = cursor
+coll.update_one({"nationality": "american"}, {"$set": {"hair_color": "maroon"}})
 
-documents = coll.find()
+documents = coll.find({"nationality": "american"})
 
 for doc in documents:
     print(doc)
