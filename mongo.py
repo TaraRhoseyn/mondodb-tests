@@ -21,29 +21,10 @@ conn = mongo_connect(MONGO_URI)
 
 coll = conn[DATABASE][COLLECTION]
 
-new_docs = [{
-    # multi docs = array of dictionaries
-    "first": "terry",
-    "last": "pratchett",
-    "dob": "28/04/1948",
-    "gender": "m",
-    "hair_color": "not much",
-    "occuptation": "writer",
-    "nationality": "british"
-}, {
-    "first": "george",
-    "last": "rr martin",
-    "dob": "02/09/1948",
-    "gender": "m",
-    "hair_color": "white",
-    "occupation": "writer",
-    "nationality": "american"
-}]
-
-coll.insert_many(new_docs)
+coll.find({"first": "douglas"})
+# MongoDB object = cursor
 
 documents = coll.find()
-# MongoDB object = cursor
 
 for doc in documents:
     print(doc)
