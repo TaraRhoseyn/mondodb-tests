@@ -40,7 +40,7 @@ def get_record():
         print("Error accessing the database")
     
     if not doc:
-        # if no docs, it's empty
+        # if there aren't any docs, it's empty
         print("")
         print("Error! No results found.")
 
@@ -75,15 +75,48 @@ def add_record():
         print("Error accessing the database")
 
 
+
+def find_record():
+    doc = get_record() # earlier function
+    if doc: # return of function
+        print("")
+        for k,v in doc.items():
+            if k != "_id": # k = key v = value
+                print(k.capitalize() + ": " + v.capitalize())
+
+
+def edit_record():
+    """
+    Allows users to edit existing records. 
+    Any inputs given will be the new values in the key/value pair.
+    Any field left blank will return to the default value.
+    """
+    doc = get_record()
+    if doc:
+        update_doc = {}  # empty dictionary
+        print("")
+        for k,v in doc.items():
+            if k != "_id":
+                update_doc[k] = input(k.capitalize() + "[" + v + "] > ")
+
+                if update_doc[k] == "":
+                    update_doc[k] = v # setting key back to original value
+        try:
+            coll.update_one(doc,{"$set": update_doc})
+            print("")
+            print("Document updated")
+        except:
+            print("Error accessing the database")
+
 def main_loop():
     while True:
         option = show_menu()
         if option == "1":
             add_record()
         elif option == "2":
-            print("You have selected option 2")
+            find_record()
         elif option == "3":
-            print("You have selected option 3")
+            edit_record()
         elif option == "4":
             print("You have selected option 4")
         elif option == "5":
